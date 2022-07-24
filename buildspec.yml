@@ -1,17 +1,25 @@
 version: 0.2
+
 env:
-  variables:
+    variables:
+        CACHE_CONTROL: "86400"
+        S3_BUCKET: "{{https://demo-project-codepipeline-itcan.s3.amazonaws.com/itcan-demo-project/}}"
+        BUILD_FOLDER: "dist"
 phases:
   install:
     runtime-versions:
-      nodejs:
-  pre_build:
+        nodejs: 10
     commands:
-      - echo Installing source NPM dependencies...
-      - npm install
-      - npm install -g @angular/cli
+        - echo Installing source NPM dependencies...
+        - npm install
+        - npm install -g @angular/cli
   build:
     commands:
-      - echo Build started on `date`
-      - ng build 
+        - echo Build started 
+        - ng build
+artifacts:
+    files:
+        - '**/*'
+    base-directory: 'dist*'
+    discard-paths: yes
 
